@@ -10,17 +10,17 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  login: string;
+  email: string;
   senha: string;
 
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private navController: NavController) {
-    this.login = "";
+    this.email = "";
     this.senha = "";
 
     this.formGroup = this.formBuilder.group({
-      'login': [this.login, Validators.compose([Validators.required])],
+      'email': [this.email, Validators.compose([Validators.required])],
       'senha': [this.senha, Validators.compose([Validators.required])]
     });
   }
@@ -29,10 +29,10 @@ export class LoginPage implements OnInit {
   }
 
   autenticar() {
-    this.login = this.formGroup.value.login;
+    this.email = this.formGroup.value.email;
     this.senha = this.formGroup.value.senha;
 
-    if (this.login == "adm" && this.senha == "adm") {
+    if (this.email == "adm" && this.senha == "adm") {
       this.navController.navigateForward("menu-admin")
     }
     else {

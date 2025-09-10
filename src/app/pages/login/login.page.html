@@ -1,20 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <form [formGroup]="formGroup" (ngSubmit)="autenticar()">
+  <form [formGroup]="formGroup" (ngSubmit)="autenticar()" class="">
     <ion-item>
-      <ion-label position="stacked">Login</ion-label>
-      <ion-input type="text" formControlName="login"></ion-input>
+      <ion-label position="stacked" class="label">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Senha</ion-label>
+    <ion-item class="mb-32">
+      <ion-label position="stacked" class="label">Senha</ion-label>
       <ion-input type="password" formControlName="senha"></ion-input>
-    </ion-item>    
-    <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Entrar</ion-button>
-    <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Entrar</ion-button>
+    </ion-item>
+    <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Entrar</ion-button>
+    <a class="link ion-float-right" [routerLink]="['/cadastro']">Não é cadastrado(a)?</a>
   </form>
 </ion-content>
