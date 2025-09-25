@@ -1,13 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>medicos</ion-title>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Médicos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">medicos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-searchbar [debounce]="1000" class="mt-16" placeholder="Pesquisar"></ion-searchbar>
 </ion-content>

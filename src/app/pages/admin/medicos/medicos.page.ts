@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Medico } from 'src/app/model/medico';
+import { MedicoService } from 'src/app/services/medico.service';
 
 @Component({
   selector: 'app-medicos',
@@ -7,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class MedicosPage implements OnInit {
+  medicos: Medico[];
 
-  constructor() { }
+  constructor(private medicoService: MedicoService) {
+    this.medicos = [];
+  }
 
   ngOnInit() {
+    let observable = this.medicoService.getAll().subscribe({
+      next: value => this.medicos = value,
+      error: err => console.log("Error: " + err),
+    });
   }
 
 }
