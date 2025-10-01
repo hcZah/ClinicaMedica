@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Cadastro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="formGroup" (ngSubmit)="autenticar()" class="">
+    <ion-item>
+      <ion-label position="stacked" class="label">Nome:</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" class="label">Sobrenome:</ion-label>
+      <ion-input type="text" formControlName="sobrenome"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" class="label">CPF:</ion-label>
+      <ion-input type="text" formControlName="cpf"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" class="label">Email:</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" class="label">Senha:</ion-label>
+      <ion-input type="password" formControlName="senha"></ion-input>
+    </ion-item>
+    <ion-item class="mb-32">
+      <ion-label position="stacked" class="label">Confirme a senha:</ion-label>
+      <ion-input type="password" formControlName="senhaConfirmacao"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Entrar</ion-button>
+    <a class="link ion-float-right" [routerLink]="['/login']">Já é cadastrado(a)?</a>
+  </form>
+</ion-content>
