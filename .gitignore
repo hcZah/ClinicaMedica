@@ -73,36 +73,36 @@ Thumbs.db
 
 # API
 
-/api/HELP.md
-/api/target/
-/api/.mvn/wrapper/maven-wrapper.jar
-/api/!**/src/main/**/target/
-/api/!**/src/test/**/target/
+/api/clinica_medica/HELP.md
+/api/clinica_medica/target/
+/api/clinica_medica/.mvn/wrapper/maven-wrapper.jar
+/api/clinica_medica/!**/src/main/**/target/
+/api/clinica_medica/!**/src/test/**/target/
 
 ### STS ###
-/api/.apt_generated
-/api/.classpath
-/api/.factorypath
-/api/.project
-/api/.settings
-/api/.springBeans
-/api/.sts4-cache
+/api/clinica_medica/.apt_generated
+/api/clinica_medica/.classpath
+/api/clinica_medica/.factorypath
+/api/clinica_medica/.project
+/api/clinica_medica/.settings
+/api/clinica_medica/.springBeans
+/api/clinica_medica/.sts4-cache
 
 ### IntelliJ IDEA ###
-/api/.idea
-/api/*.iws
-/api/*.iml
-/api/*.ipr
+/api/clinica_medica/.idea
+/api/clinica_medica/*.iws
+/api/clinica_medica/*.iml
+/api/clinica_medica/*.ipr
 
 ### NetBeans ###
-/api/nbproject/private/
-/api/nbbuild/
-/api/dist/
-/api/nbdist/
-/api/.nb-gradle/
-/api/build/
-/api/!**/src/main/**/build/
-/api/!**/src/test/**/build/
+/api/clinica_medica/nbproject/private/
+/api/clinica_medica/nbbuild/
+/api/clinica_medica/dist/
+/api/clinica_medica/nbdist/
+/api/clinica_medica/.nb-gradle/
+/api/clinica_medica/build/
+/api/clinica_medica/!**/src/main/**/build/
+/api/clinica_medica/!**/src/test/**/build/
 
 ### VS Code ###
-/api/.vscode/
+/api/clinica_medica/.vscode/
