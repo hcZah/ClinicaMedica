@@ -75,10 +75,10 @@ private final MedicoRepository medicoRepository;
         int qtd = medicoRepository.delete(CdMedico);
 
         if (qtd == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum Medico excluCdMedicoo.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum Medico excluido.");
         }
         if (qtd > 1) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Foi excluCdMedicoo mais de 1 Medico.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Foi excluido mais de 1 Medico.");
         }
 
         return ResponseEntity.ok().body(medico);
