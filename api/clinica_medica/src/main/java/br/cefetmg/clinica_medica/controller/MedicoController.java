@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins ="localhost:8100")
 @RestController
 @RequestMapping("/api/v1/medico") //http://localhost:8080/api/v1/medico
 public class MedicoController {

@@ -8,11 +8,10 @@ import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 import java.util.List;
 
-@CrossOrigin("localhost:8100")
 @Repository
 @RegisterBeanMapper(Consulta.class)
 public interface ConsultaRepository {
