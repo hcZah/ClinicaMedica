@@ -18,29 +18,26 @@ public interface MedicoRepository {
     @SqlQuery("select * from TbMedico;")
     List<Medico> findAll();
 
-    @SqlQuery("select * from TbMedico where CdMedico = :CdMedico;")
-    Medico findByCdMedico(@Bind("CdMedico") int CdMedico);
+    @SqlQuery("select * from TbMedico where CdUsuario = :CdUsuario;")
+    Medico findByCdUsuario(@Bind("CdUsuario") int CdUsuario);
 
     @SqlUpdate("""
-        insert into TbMedico (nome, cpf, email, senha)
-        values (:NmMedico, :CPF, :Email, :Senha);
+        insert into TbMedico (CRM)
+        values (:CRM);
     """)
     @GetGeneratedKeys
     int insert(@BindBean Medico medico);
 
     @SqlUpdate("""
         update TbMedico
-        set nome = :NmMedico,
-            cpf = :CPF,
-            email = :Email,
-            senha = :Senha
-        where CdMedico = :CdMedico;
+        set CRM = :CRM,
+        where CdUsuario = :CdUsuario;
     """)
     int update(@BindBean Medico medico);
 
     @SqlUpdate("""
-        delete from TbMedico where CdMedico = :CdMedico;
+        delete from TbMedico where CdUsuario = :CdUsuario;
     """)
-    int delete(@Bind("CdMedico") int CdMedico);
+    int delete(@Bind("CdUsuario") int CdUsuario);
 
 }

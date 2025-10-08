@@ -5,10 +5,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Paciente {
-    private int CdPaciente;
-    private String nome;
-    private String email;
-    private String endereço;
-    private String senha;
-    private String telefone;
+    private int cdUsuario;
+    private String Endereco;
+    private String Telefone;
 }

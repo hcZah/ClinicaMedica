@@ -38,20 +38,14 @@ export class LoginPage implements OnInit {
     this.email = this.formGroup.value.email;
     this.senha = this.formGroup.value.senha;
     if (this.email == "adm" && this.senha == "adm") {
-      this.navController.navigateForward("menu-admin")
+      this.navController.navigateForward("menu-admin");
     }
 
-    this.pacienteService.autenticar(this.email, this.senha).subscribe({
-      next: (paciente) => {
-        this.paciente = paciente;
-        this.pacienteService.registrar(this.paciente);
-        this.navController.navigateForward("inicio")
-      },
-      error: (err) => {
-        console.error('Login ou senha inválidos', err);
-      this.exibirMensagem('Login ou senha inválidos');
-      }
-    });
+    if (this.pacienteService.auth(this.email, this.senha) != -1) {
+      this.navController.navigateForward("inicio");
+    } else {
+      this.exibirMensagem("Email ou senha incorreto(s).");
+    }
   }
 
   async exibirMensagem(texto: string) {

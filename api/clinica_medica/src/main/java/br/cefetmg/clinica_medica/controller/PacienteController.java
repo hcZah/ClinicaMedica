@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="localhost:8100")
 @RestController
-@RequestMapping("/api/v1/paciente") //http://localhost:8080/api/v1/paciente
+@RequestMapping("/paciente") //http://localhost:8080/api/v1/paciente
 public class PacienteController {
 
 private final PacienteRepository pacienteRepository;
@@ -20,9 +20,9 @@ private final PacienteRepository pacienteRepository;
     public PacienteController(PacienteRepository pacienteRepository) {
         this.pacienteRepository = pacienteRepository;
     }
-       @GetMapping("/{CdPaciente}")
-    public ResponseEntity<Paciente> getByCdPaciente(@PathVariable int CdPaciente) {
-        Paciente paciente = pacienteRepository.findByCdPaciente(CdPaciente);
+       @GetMapping("/{CdUsuario}")
+    public ResponseEntity<Paciente> getByCdUsuario(@PathVariable int CdUsuario) {
+        Paciente paciente = pacienteRepository.findByCdUsuario(CdUsuario);
         if (paciente != null) {
             return ResponseEntity.ok().body(paciente);
         }
@@ -38,14 +38,14 @@ private final PacienteRepository pacienteRepository;
 
     @PostMapping({"","/"})
     public ResponseEntity<Paciente> create(@RequestBody Paciente paciente) {
-        int CdPaciente = pacienteRepository.insert(paciente);
-        paciente.setCdPaciente(CdPaciente);
+        int CdUsuario = pacienteRepository.insert(paciente);
+        paciente.setCdUsuario(CdUsuario);
         return ResponseEntity.ok().body(paciente);
     }
 
     @PutMapping({"","/"})
     public ResponseEntity<Paciente> update(@RequestBody Paciente paciente) {
-        if (paciente.getCdPaciente() == 0) {
+        if (paciente.getCdUsuario() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente not found");
         }
 
@@ -61,18 +61,18 @@ private final PacienteRepository pacienteRepository;
         return ResponseEntity.ok().body(paciente);
     }
 
-    @DeleteMapping("/{CdPaciente}")
-    public ResponseEntity<Paciente> delete(@PathVariable int CdPaciente) {
-        if (CdPaciente == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CdPaciente do Paciente nao encontrado");
+    @DeleteMapping("/{CdUsuario}")
+    public ResponseEntity<Paciente> delete(@PathVariable int CdUsuario) {
+        if (CdUsuario == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CdUsuario do Paciente nao encontrado");
         }
 
-        Paciente paciente = pacienteRepository.findByCdPaciente(CdPaciente);
+        Paciente paciente = pacienteRepository.findByCdUsuario(CdUsuario);
         if (paciente == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente nao encontrado");
         }
 
-        int qtd = pacienteRepository.delete(CdPaciente);
+        int qtd = pacienteRepository.delete(CdUsuario);
 
         if (qtd == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum Paciente excluido.");

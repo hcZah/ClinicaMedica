@@ -1,10 +1,11 @@
 package br.cefetmg.clinica_medica.model;
+
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medico {
-    private int CdUsuario;
-    private String CRM;
+public class LoginData {
+    private String email;
+    private String senha;
 }

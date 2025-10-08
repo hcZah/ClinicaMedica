@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="localhost:8100")
 @RestController
-@RequestMapping("/api/v1/consulta") //http://localhost:8080/api/v1/consulta
+@RequestMapping("/consulta") //http://localhost:8080/api/v2/consulta
 public class ConsultaController {
 private final ConsultaRepository consultaRepository;
 

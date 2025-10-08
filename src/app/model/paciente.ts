@@ -1,19 +1,13 @@
+import { Usuario } from "./usuario";
+
 export class Paciente {
     cd: number;
-    nome: string;
-    cpf: string;
-    email: string;
     endereco: string;
-    senha: string;
     telefone: string;
 
-    constructor() {
-        this.cd = 0;
-        this.nome = "";
-        this.cpf = "";
-        this.email = "";
+    constructor(usuario: Usuario) {
+        this.cd = usuario.cd;
         this.endereco = "";
-        this.senha = "";
         this.telefone = "";
     }
 }
