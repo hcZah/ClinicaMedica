@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginResponse } from '../model/login-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/api/v1/usuario';
+  private apiUrl = 'http://localhost:8080/api/auth';
 
   private headerDict = {
-    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
   };
 
   private requestOptions = {
@@ -19,7 +20,7 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  autenticar(email: String, senha: String): Observable<Usuario> {
+  autenticar(email: String, senha: String): LoginResponse {
 
     const objetoJS = {
       email: email,
@@ -28,9 +29,36 @@ export class UsuarioService {
 
     const objetoJson = JSON.stringify(objetoJS);
 
-    const apiUrlTemp = this.apiUrl + "/auth";
+    const apiUrlTemp = this.apiUrl + "/login";
 
-    return this.http.post<Usuario>(apiUrlTemp, objetoJson);
+    let loginResponse = new LoginResponse();
+
+    this.http.post<any>(apiUrlTemp, objetoJson, this.requestOptions).subscribe({
+      next(object) {
+        loginResponse.usuario = object.usuario;
+        loginResponse.token = object.usuario;
+      },
+    });
+
+    return loginResponse;
+  }
+
+  getTipoUsuario(usuario: Usuario): string {
+    if (localStorage.getItem('tipoUsuario') != null) {
+      return localStorage.getItem('tipoUsuario') || "erro";
+    } else {
+      const apiUrlTemp = this.apiUrl + "/getType/" + usuario.cd;
+      this.http.get<string>(apiUrlTemp).subscribe({
+        next(type: string) {
+          localStorage.setItem('tipoUsuario', type);
+          return type;
+        },
+        error(e) {
+          return "erro";
+        }
+      });
+    }
+    return "erro";
   }
 
   getAll() {
@@ -39,18 +67,19 @@ export class UsuarioService {
   }
 
   //localStorage
-  carregar(): Usuario {
-    let paciente = JSON.parse(localStorage.getItem('pacienteAutenticado') || '{}');
-    return paciente;
+  carregar(): LoginResponse {
+    let loginResponse: LoginResponse = JSON.parse(localStorage.getItem('loginData') || '{}');
+    return loginResponse;
   }
 
   //localStorage
-  registrar(usuario: Usuario) {
-    localStorage.setItem('PacienteAutenticado', JSON.stringify(usuario));
+  registrar(loginData: LoginResponse) {
+    localStorage.setItem('loginData', JSON.stringify(loginData));
   }
 
   //localStorage
   encerrar() {
-    localStorage.removeItem('pacienteAutenticado');
+    localStorage.removeItem('loginData');
+    localStorage.removeItem('tipoUsuario');
   }
 }

@@ -29,6 +29,8 @@ export class CadastroPage implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       'nome': [this.nome, Validators.compose([Validators.required])],
+      'sobrenome': [this.sobrenome, Validators.compose([Validators.required])],
+      'cpf': [this.cpf, Validators.compose([Validators.required])],
       'email': [this.email, Validators.compose([Validators.required])],
       'senha': [this.senha, Validators.compose([Validators.required])],
       'senhaConfirmacao': [this.senhaConfirmacao, Validators.compose([Validators.required])],

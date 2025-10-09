@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { LoginResponse } from 'src/app/model/login-response';
 
 import { Paciente } from 'src/app/model/paciente';
+import { Usuario } from 'src/app/model/usuario';
 import { PacienteService } from 'src/app/services/paciente.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +23,10 @@ export class LoginPage implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private navController: NavController, private toastController: ToastController, private pacienteService: PacienteService) {
+  constructor(private usuarioService: UsuarioService, private formBuilder: FormBuilder, private navController: NavController, private toastController: ToastController, private pacienteService: PacienteService) {
     this.email = "";
     this.senha = "";
-    this.paciente = new Paciente();
+    this.paciente = new Paciente(new Usuario());
 
     this.formGroup = this.formBuilder.group({
       'email': [this.email, Validators.compose([Validators.required])],
@@ -32,6 +35,8 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.formGroup.get("email")?.setValue("");
+    this.formGroup.get("senha")?.setValue("");
   }
 
   autenticar() {
@@ -41,11 +46,28 @@ export class LoginPage implements OnInit {
       this.navController.navigateForward("menu-admin");
     }
 
-    if (this.pacienteService.auth(this.email, this.senha) != -1) {
-      this.navController.navigateForward("inicio");
-    } else {
+    let loginResponse = this.usuarioService.autenticar(this.email, this.senha);
+
+    if (loginResponse.token == "") {
       this.exibirMensagem("Email ou senha incorreto(s).");
+    } else {
+      let tipo = this.usuarioService.getTipoUsuario(loginResponse.usuario);
+
+      if (tipo = "paciente") {
+        this.navController.navigateForward("/inicio");
+      }
+      if (tipo = "medico") {
+        //
+      }
+      if (tipo = "admin") {
+        this.navController.navigateForward("/menu-admin");
+      }
+      this.exibirMensagem("Não foi possível realizar login.");
     }
+  }
+
+  paraCadastro() {
+    this.navController.navigateForward("/cadastro");
   }
 
   async exibirMensagem(texto: string) {

@@ -2,10 +2,11 @@ package br.cefetmg.clinica_medica;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"br.cegetmg.clinica_medica"})
+@SpringBootApplication(scanBasePackages = {
+    "br.cefetmg.clinica_medica",
+    "br.cefetmg.clinica_medica.config.security"
+})
 public class ClinicaMedicaApplication {
 
 	public static void main(String[] args) {

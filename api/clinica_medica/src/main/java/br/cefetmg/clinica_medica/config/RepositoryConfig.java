@@ -1,6 +1,8 @@
 package br.cefetmg.clinica_medica.config;
 
 import br.cefetmg.clinica_medica.repository.MedicoRepository;
+import br.cefetmg.clinica_medica.repository.PacienteRepository;
+import br.cefetmg.clinica_medica.repository.UsuarioRepository;
 import br.cefetmg.clinica_medica.repository.ConsultaRepository;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +18,15 @@ public class RepositoryConfig {
     @Bean
     public ConsultaRepository getConsulta(Jdbi jdbi) {
         return jdbi.onDemand(ConsultaRepository.class);
+    }
+
+    @Bean
+    public PacienteRepository getPaciente(Jdbi jdbi) {
+        return jdbi.onDemand(PacienteRepository.class);
+    }
+
+    @Bean
+    public UsuarioRepository getUsuario(Jdbi jdbi) {
+        return jdbi.onDemand(UsuarioRepository.class);
     }
 }
