@@ -45,7 +45,7 @@ private final UsuarioRepository usuarioRepository;
 */
     @PutMapping({"","/"})
     public ResponseEntity<Usuario> update(@RequestBody Usuario usuario) {
-        if (usuario.getCdUsuario() == 0) {
+        if (usuario.getCdUsuario() == "" || usuario.getCdUsuario() == null || usuario.getCdUsuario().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
         }
 

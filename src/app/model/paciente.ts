@@ -1,12 +1,12 @@
 import { Usuario } from "./usuario";
 
 export class Paciente {
-    cd: string;
+    cdUsuario: string;
     endereco: string;
     telefone: string;
 
     constructor(usuario: Usuario) {
-        this.cd = usuario.cd;
+        this.cdUsuario = usuario.cdUsuario;
         this.endereco = "";
         this.telefone = "";
     }

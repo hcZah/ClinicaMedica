@@ -25,7 +25,7 @@ export class CadastroPage implements OnInit {
     this.senhaConfirmacao = "";
 
     this.formGroup = this.formBuilder.group({
-      'nome': [this.usuario.nome, Validators.compose([Validators.required])],
+      'nome': [this.usuario.nmUsuario, Validators.compose([Validators.required])],
       'cpf': [this.usuario.cpf, Validators.compose([Validators.required])],
       'email': [this.usuario.email, Validators.compose([Validators.required])],
       'senha': [this.usuario.senha, Validators.compose([Validators.required])],
@@ -37,7 +37,7 @@ export class CadastroPage implements OnInit {
   }
 
   cadastrar() {
-    this.usuario.nome = this.formGroup.value.nome;
+    this.usuario.nmUsuario = this.formGroup.value.nome;
     this.usuario.cpf = this.formGroup.value.cpf;
     this.usuario.email = this.formGroup.value.email;
     this.usuario.senha = this.formGroup.value.senha;
@@ -52,32 +52,29 @@ export class CadastroPage implements OnInit {
       },
       error(erro) {
         console.error('Erro ao cadastrar:', erro);
-        super.exibirMensagem('Não foi possível cadastrar o usuário. Tente novamente.');
       }
     });
 
-    if (usuarioCadastrado.cd = "") {
+    if (usuarioCadastrado.cdUsuario == "" || usuarioCadastrado.cdUsuario == null || usuarioCadastrado.cdUsuario == undefined) {
+      this.exibirMensagem('Não foi possível cadastrar o usuário. Tente novamente.');
       return;
     }
 
     this.usuarioService.registrarUsuario(this.usuarioService.autenticar(usuarioCadastrado.email, this.formGroup.value.senha))
     let paciente = new Paciente(usuarioCadastrado);
-    
+
     this.pacienteService.cadastro(paciente).subscribe({
       next(value) {
         super.exibirMensagem('Registro salvo com sucesso!!!');
+        super.navController.navigateForward("inicio")
       },
       error(erro) {
         console.error('Erro ao cadastrar:', erro);
-        super.exibirMensagem('Não foi possível cadastrar o paciente. Contate a equipe de suporte.');
       }
     });
-    this.navController.navigateForward("inicio")
 
-
-    return; // sai do método
-
-
+    this.exibirMensagem('Não foi possível cadastrar o paciente. Contate a equipe de suporte.');
+    return;
   }
 
   async exibirMensagem(texto: string) {

@@ -1,16 +1,18 @@
 export class Usuario {
-    cd: string;
-    nome: string;
+    cdUsuario: string;
+    nmUsuario: string;
     cpf: string;
     email: string;
     senha: string;
+    role: string;
 
     constructor() {
-        this.cd = "";
-        this.nome = "";
+        this.cdUsuario = "";
+        this.nmUsuario = "";
         this.cpf = "";
         this.email = "";
         this.senha = "";
+        this.role = "";
     }
 }
 

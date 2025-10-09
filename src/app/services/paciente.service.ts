@@ -23,7 +23,7 @@ export class PacienteService {
   constructor(private http: HttpClient, private usuarioService: UsuarioService) { }
   cadastro(paciente: Paciente): Observable<Paciente> {
     const apiUrlTemp = this.apiUrl + "/";
-    return this.http.post<Paciente>(apiUrlTemp, JSON.stringify(paciente),this.usuarioService.getHeaders());
+    return this.http.post<Paciente>(apiUrlTemp, JSON.stringify(paciente), this.usuarioService.getHeaders());
   }
 
   getAll() {

@@ -53,7 +53,7 @@ export class UsuarioService {
     if (localStorage.getItem('tipoUsuario') != null) {
       return localStorage.getItem('tipoUsuario') || "erro";
     } else {
-      const apiUrlTemp = this.apiUrl + "/getType/" + usuario.cd;
+      const apiUrlTemp = this.apiUrl + "/getType/" + usuario.cdUsuario;
       this.http.get<string>(apiUrlTemp).subscribe({
         next(type: string) {
           localStorage.setItem('tipoUsuario', type);

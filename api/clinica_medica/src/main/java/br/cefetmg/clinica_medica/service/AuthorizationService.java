@@ -85,9 +85,10 @@ public class AuthorizationService implements UserDetailsService {
         //codificar a senha e cria usuário para iserir no banco.
         String encryptedPassword = passwordEncoder.encode(data.getSenha());
         usuario = Usuario.builder()
-                .NmUsuario(data.getNmUsuario())
-                .Email(data.getEmail())
-                .Senha(encryptedPassword)
+                .nmUsuario(data.getNmUsuario())
+                .email(data.getEmail())
+                .cpf(data.getCpf())
+                .senha(encryptedPassword)
                 .build();
 
         //Tenta inserir no banco de dados o usuario

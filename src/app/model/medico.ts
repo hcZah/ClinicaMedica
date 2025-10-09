@@ -1,11 +1,11 @@
 import { Usuario } from "./usuario";
 
 export class Medico {
-    cd: string;
+    cdUsuario: string;
     crm: string;
 
     constructor(usuario: Usuario) {
-        this.cd = usuario.cd;
+        this.cdUsuario = usuario.cdUsuario;
         this.crm = "";
     }
 }
