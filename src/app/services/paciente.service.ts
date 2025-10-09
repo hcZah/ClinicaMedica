@@ -1,39 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Paciente } from '../model/paciente';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginData } from '../model/login-data';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacienteService {
 
-  private apiUrl = 'http://localhost:8080/api/v1/paciente';
+  private apiUrl = 'http://localhost:8080/api/paciente';
 
-  constructor(private http: HttpClient) { }
+  private headerDict = {
+    'Content-Type': 'application/json',
+  };
 
-  //localStorage
-  carregar(): Paciente {
-    let paciente = JSON.parse(localStorage.getItem('pacienteAutenticado') || '{}');
-    return paciente;
+  private requestOptions = {
+    headers: new HttpHeaders(this.headerDict),
+  };
+
+  constructor(private http: HttpClient, private usuarioService: UsuarioService) { }
+  cadastro(paciente: Paciente): Observable<Paciente> {
+    const apiUrlTemp = this.apiUrl + "/";
+    return this.http.post<Paciente>(apiUrlTemp, JSON.stringify(paciente),this.usuarioService.getHeaders());
   }
 
-  //localStorage
-  registrar(paciente: Paciente) {
-    localStorage.setItem('PacienteAutenticado', JSON.stringify(paciente));
-  }
-
-  //localStorage
-  encerrar() {
-    localStorage.removeItem('pacienteAutenticado');
-  }
-
-  cadastrar(paciente: Paciente): Observable<number> {
-    return this.http.post<number>(this.apiUrl, JSON.stringify(paciente));
-  }
-
-  buscarPorId(cd: number): Observable<Paciente> {
-    return this.http.get<Paciente>(`${this.apiUrl}/${cd}`);
+  getAll() {
+    const apiUrlTemp = this.apiUrl + "/"
+    return this.http.get<Paciente[]>(apiUrlTemp, this.usuarioService.getHeaders());
   }
 }

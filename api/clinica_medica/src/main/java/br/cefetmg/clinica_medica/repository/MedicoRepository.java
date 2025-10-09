@@ -21,9 +21,12 @@ public interface MedicoRepository {
     @SqlQuery("select * from TbMedico where CdUsuario = :CdUsuario;")
     Medico findByCdUsuario(@Bind("CdUsuario") int CdUsuario);
 
+    @SqlQuery("select * from TbMedico where CRM = :CRM;")
+    Medico findByCRM(@Bind("CRM") String CRM);
+
     @SqlUpdate("""
-        insert into TbMedico (CRM)
-        values (:CRM);
+        insert into TbMedico (CdUsuario, CRM)
+        values (:CdUsuario, :CRM);
     """)
     @GetGeneratedKeys
     int insert(@BindBean Medico medico);

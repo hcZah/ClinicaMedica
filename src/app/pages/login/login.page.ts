@@ -51,6 +51,8 @@ export class LoginPage implements OnInit {
     if (loginResponse.token == "") {
       this.exibirMensagem("Email ou senha incorreto(s).");
     } else {
+      this.usuarioService.registrarUsuario(loginResponse);
+      
       let tipo = this.usuarioService.getTipoUsuario(loginResponse.usuario);
 
       if (tipo = "paciente") {

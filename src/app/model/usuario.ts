@@ -1,12 +1,12 @@
 export class Usuario {
-    cd: number;
+    cd: string;
     nome: string;
     cpf: string;
     email: string;
     senha: string;
 
     constructor() {
-        this.cd = 0;
+        this.cd = "";
         this.nome = "";
         this.cpf = "";
         this.email = "";

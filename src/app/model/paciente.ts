@@ -1,7 +1,7 @@
 import { Usuario } from "./usuario";
 
 export class Paciente {
-    cd: number;
+    cd: string;
     endereco: string;
     telefone: string;
 

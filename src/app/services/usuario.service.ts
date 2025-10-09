@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginResponse } from '../model/login-response';
+import { LoginData } from '../model/login-data';
 
 @Injectable({
   providedIn: 'root'
@@ -36,11 +37,16 @@ export class UsuarioService {
     this.http.post<any>(apiUrlTemp, objetoJson, this.requestOptions).subscribe({
       next(object) {
         loginResponse.usuario = object.usuario;
-        loginResponse.token = object.usuario;
+        loginResponse.token = object.token.token;
       },
     });
 
     return loginResponse;
+  }
+
+  cadastro(usuario: Usuario): Observable<Usuario> {
+    const apiUrlTemp = this.apiUrl + "/register";
+    return this.http.post<Usuario>(apiUrlTemp, JSON.stringify(usuario), this.requestOptions);
   }
 
   getTipoUsuario(usuario: Usuario): string {
@@ -67,13 +73,13 @@ export class UsuarioService {
   }
 
   //localStorage
-  carregar(): LoginResponse {
+  recuperarUsuario(): LoginResponse {
     let loginResponse: LoginResponse = JSON.parse(localStorage.getItem('loginData') || '{}');
     return loginResponse;
   }
 
   //localStorage
-  registrar(loginData: LoginResponse) {
+  registrarUsuario(loginData: LoginResponse) {
     localStorage.setItem('loginData', JSON.stringify(loginData));
   }
 
@@ -81,5 +87,22 @@ export class UsuarioService {
   encerrar() {
     localStorage.removeItem('loginData');
     localStorage.removeItem('tipoUsuario');
+  }
+
+  getHeaders() {
+    let headerDict = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken(),
+    };
+
+    let requestOptions = {
+      headers: new HttpHeaders(this.headerDict),
+    };
+
+    return requestOptions;
+  }
+
+  private getToken() {
+    return JSON.parse(localStorage.getItem('loginData') || "").token;
   }
 }

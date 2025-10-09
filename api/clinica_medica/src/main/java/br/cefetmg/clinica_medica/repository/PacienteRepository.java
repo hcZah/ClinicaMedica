@@ -22,8 +22,8 @@ public interface PacienteRepository {
     Paciente findByCdUsuario(@Bind("CdUsuario") int CdUsuario);
 
     @SqlUpdate("""
-        insert into TbPaciente (Endereco, Telefone)
-        values (:Endereco, :Telefone);
+        insert into TbPaciente (CdUsuario, Endereco, Telefone)
+        values (:CdUsuario, :Endereco, :Telefone);
     """)
     @GetGeneratedKeys
     int insert(@BindBean Paciente paciente);
