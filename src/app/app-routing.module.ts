@@ -9,35 +9,43 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'cadastro',
-    loadChildren: () => import('./pages/cadastro/cadastro.module').then( m => m.CadastroPageModule)
+    loadChildren: () => import('./pages/cadastro/cadastro.module').then(m => m.CadastroPageModule)
   },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+    loadChildren: () => import('./pages/inicio/inicio.module').then(m => m.InicioPageModule)
   },
   {
     path: 'menu-admin',
-    loadChildren: () => import('./pages/admin/menu-admin/menu-admin.module').then( m => m.MenuAdminPageModule)
+    loadChildren: () => import('./pages/admin/menu-admin/menu-admin.module').then(m => m.MenuAdminPageModule)
   },
   {
     path: 'medico',
-    loadChildren: () => import('./pages/admin/medico/medico.module').then( m => m.MedicoPageModule)
+    loadChildren: () => import('./pages/admin/medico/medico.module').then(m => m.MedicoPageModule)
+  },
+  {
+    path: 'medico/:cdUsuario',
+    loadChildren: () => import('./pages/admin/medico/medico.module').then(m => m.MedicoPageModule)
   },
   {
     path: 'medicos',
-    loadChildren: () => import('./pages/admin/medicos/medicos.module').then( m => m.MedicosPageModule)
+    loadChildren: () => import('./pages/admin/medicos/medicos.module').then(m => m.MedicosPageModule)
   },
   {
     path: 'paciente',
-    loadChildren: () => import('./pages/admin/paciente/paciente.module').then( m => m.PacientePageModule)
+    loadChildren: () => import('./pages/admin/paciente/paciente.module').then(m => m.PacientePageModule)
+  },
+  {
+    path: 'paciente/:cdUsuario',
+    loadChildren: () => import('./pages/admin/paciente/paciente.module').then(m => m.PacientePageModule)
   },
   {
     path: 'pacientes',
-    loadChildren: () => import('./pages/admin/pacientes/pacientes.module').then( m => m.PacientesPageModule)
+    loadChildren: () => import('./pages/admin/pacientes/pacientes.module').then(m => m.PacientesPageModule)
   },
 ];
 

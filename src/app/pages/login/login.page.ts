@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewWillEnter } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { LoginResponse } from 'src/app/model/login-response';
 
@@ -15,7 +15,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./login.page.scss'],
   standalone: false,
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements ViewWillEnter {
 
   email: string;
   senha: string;
@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   formGroup: FormGroup;
 
   constructor(private usuarioService: UsuarioService, private formBuilder: FormBuilder, private navController: NavController, private toastController: ToastController, private pacienteService: PacienteService) {
+    this.usuarioService.deslogar();
     this.email = "";
     this.senha = "";
     this.paciente = new Paciente(new Usuario());
@@ -34,37 +35,31 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.formGroup.get("email")?.setValue("");
-    this.formGroup.get("senha")?.setValue("");
+  ionViewWillEnter() {
+    this.usuarioService.deslogar();
+    this.formGroup.reset();
   }
 
   autenticar() {
     this.email = this.formGroup.value.email;
     this.senha = this.formGroup.value.senha;
-    if (this.email == "adm" && this.senha == "adm") {
-      this.navController.navigateForward("menu-admin");
-    }
 
-    let loginResponse = this.usuarioService.autenticar(this.email, this.senha);
+    let usuario: Usuario = this.usuarioService.autenticar(this.email, this.senha);
 
-    if (loginResponse.token == "") {
+    if (usuario.cdUsuario == 0) {
       this.exibirMensagem("Email ou senha incorreto(s).");
     } else {
-      this.usuarioService.registrarUsuario(loginResponse);
-      
-      let tipo = this.usuarioService.getTipoUsuario(loginResponse.usuario);
+      let role = usuario.role;
 
-      if (tipo = "paciente") {
+      if (role == "pac") {
         this.navController.navigateForward("/inicio");
-      }
-      if (tipo = "medico") {
+      } else if (role == "med") {
         //
-      }
-      if (tipo = "admin") {
+      } else if (role == "adm") {
         this.navController.navigateForward("/menu-admin");
+      } else {
+        this.exibirMensagem("Não foi possível realizar login.");
       }
-      this.exibirMensagem("Não foi possível realizar login.");
     }
   }
 

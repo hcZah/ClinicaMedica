@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Medico } from '../model/medico';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Usuario } from '../model/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class MedicoService {
   };
 
   constructor(private http: HttpClient) { }
-
+/*
   autenticar(email: String, senha: String): Observable<Medico> {
 
     const objetoJS = {
@@ -52,5 +53,73 @@ export class MedicoService {
   //localStorage
   encerrar() {
     localStorage.removeItem('pacienteAutenticado');
+  }
+*/
+
+ cadastro(medico: Medico): boolean {
+    alert(medico.cdUsuario)
+    if (medico.cdUsuario == 0) {
+      console.log("invalido");
+      return false;
+    }
+    if (!this.medicoValido(medico)) {
+      console.log("invalido");
+      return false;
+    }
+
+    var medicos: Medico[] = this.getMedicos();
+
+    if (!Array.isArray(medicos)) {
+      medicos = [];
+    }
+
+    let index = medicos.findIndex((m: Medico) => m.cdUsuario == medico.cdUsuario);
+    if (index == -1) {
+      medicos.push(medico);
+      localStorage.setItem('medicos', JSON.stringify(medicos));
+      return true;
+    } else {
+      medicos[index] = medico;
+      localStorage.setItem('medicos', JSON.stringify(medicos));
+      return true;
+    }
+  }
+
+  getMedicos() {
+    return JSON.parse(localStorage.getItem('medicos') || '{}');
+  }
+
+  getMedico(cdUsuario: number): Medico { 
+    var medicos: Medico[] = this.getMedicos();
+
+    if (!Array.isArray(medicos)) {
+      return new Medico(new Usuario);
+    }
+
+    let index = medicos.findIndex((m: Medico) => m.cdUsuario == cdUsuario);
+    if (index == -1) {
+      return new Medico(new Usuario);
+    } else {
+      return medicos[index];
+    }
+  }
+
+  private medicoValido(medico: Medico): boolean {
+    let medicos: Medico[] = this.getMedicos();
+
+    if (!Array.isArray(medicos)) {
+      console.log("valido");
+      return true;
+    }
+
+    let teste: Medico | undefined = medicos.find((m: Medico) => (medico.cdUsuario != medico.cdUsuario && medico.crm == m.crm));
+
+    if (teste != undefined) {
+      console.log("invalido");
+      return false;
+    }
+
+    console.log("valido");
+    return true;
   }
 }

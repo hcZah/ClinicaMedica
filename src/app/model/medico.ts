@@ -1,7 +1,7 @@
 import { Usuario } from "./usuario";
 
 export class Medico {
-    cdUsuario: string;
+    cdUsuario: number;
     crm: string;
 
     constructor(usuario: Usuario) {

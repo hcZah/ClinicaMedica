@@ -1,13 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>pacientes</ion-title>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Pacientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pacientes</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-searchbar [debounce]="500" show-clear-button="always" class="mt-16" (ionInput)="pesquisar($event)" placeholder="Pesquisar"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let paciente of pacientesExpostos; let i = index" [routerLink]="['/paciente/', paciente.cdUsuario]" detail>
+      <ion-label>
+        <p style='display:inline'> Nome: </p>
+        <h2 style='display:inline'> {{usuarios[i].nmUsuario}}</h2>
+        <br>
+        <p style='display:inline'> CPF: </p>
+        <h2 style='display:inline'> {{usuarios[i].cpf}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/paciente" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

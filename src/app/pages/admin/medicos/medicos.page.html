@@ -1,10 +1,34 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
     <ion-title>Clinica Médica</ion-title>
     <ion-title size="small" class="subtitle">Médicos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar [debounce]="1000" class="mt-16" placeholder="Pesquisar"></ion-searchbar>
+  <ion-searchbar [debounce]="500" show-clear-button="always" class="mt-16" (ionInput)="pesquisar($event)" placeholder="Pesquisar"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let medico of medicosExpostos; let i = index" [routerLink]="['/medico/', medico.cdUsuario]" detail>
+      <ion-label>
+        <p style='display:inline'> Nome: </p>
+        <h2 style='display:inline'> {{usuarios[i].nmUsuario}}</h2>
+        <br>
+        <p style='display:inline'> CPF: </p>
+        <h2 style='display:inline'> {{usuarios[i].cpf}}</h2>
+        <br>
+        <p style='display:inline'> CRM: </p>
+        <h2 style='display:inline'> {{medico.crm}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/medico" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

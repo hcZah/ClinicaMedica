@@ -21,6 +21,8 @@ export class CadastroPage implements OnInit {
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private navController: NavController, private usuarioService: UsuarioService, private toastController: ToastController, private pacienteService: PacienteService) {
+    this.usuarioService.deslogar();
+
     this.usuario = new Usuario();
     this.senhaConfirmacao = "";
 
@@ -34,47 +36,42 @@ export class CadastroPage implements OnInit {
   }
 
   ngOnInit() {
+    this.usuarioService.deslogar();
   }
 
   cadastrar() {
+    this.usuario.cdUsuario = 0;
     this.usuario.nmUsuario = this.formGroup.value.nome;
     this.usuario.cpf = this.formGroup.value.cpf;
     this.usuario.email = this.formGroup.value.email;
     this.usuario.senha = this.formGroup.value.senha;
     this.senhaConfirmacao = this.formGroup.value.senhaConfirmacao;
 
-
-    // Espera a Promise do enviar() 
-    let usuarioCadastrado = new Usuario();
-    this.usuarioService.cadastro(this.usuario).subscribe({
-      next(usuario: Usuario) {
-        usuarioCadastrado = usuario;
-      },
-      error(erro) {
-        console.error('Erro ao cadastrar:', erro);
-      }
-    });
-
-    if (usuarioCadastrado.cdUsuario == "" || usuarioCadastrado.cdUsuario == null || usuarioCadastrado.cdUsuario == undefined) {
-      this.exibirMensagem('Não foi possível cadastrar o usuário. Tente novamente.');
+    if (this.usuario.senha != this.senhaConfirmacao) {
+      this.exibirMensagem("As senhas não coincidem.");
       return;
     }
 
-    this.usuarioService.registrarUsuario(this.usuarioService.autenticar(usuarioCadastrado.email, this.formGroup.value.senha))
-    let paciente = new Paciente(usuarioCadastrado);
+    this.usuario.role = "pac";
 
-    this.pacienteService.cadastro(paciente).subscribe({
-      next(value) {
-        super.exibirMensagem('Registro salvo com sucesso!!!');
-        super.navController.navigateForward("inicio")
-      },
-      error(erro) {
-        console.error('Erro ao cadastrar:', erro);
+    var sucesso: boolean = this.usuarioService.cadastro(this.usuario);
+
+    if (!sucesso) {
+      this.exibirMensagem('Não foi possível cadastrar o usuário. Tente novamente.');
+      return;
+    } else {
+      let paciente = new Paciente(this.usuario);
+      sucesso = this.pacienteService.cadastro(paciente);
+
+      if (!sucesso) {
+        this.usuarioService.deleteUsuario(this.usuario.cdUsuario);
+        this.exibirMensagem('Não foi possível cadastrar o usuário. Tente novamente.');
+        return;
+      } else {
+        this.exibirMensagem('Usuário cadastrado com sucesso!');
+        this.navController.navigateForward("/login");
       }
-    });
-
-    this.exibirMensagem('Não foi possível cadastrar o paciente. Contate a equipe de suporte.');
-    return;
+    }
   }
 
   async exibirMensagem(texto: string) {

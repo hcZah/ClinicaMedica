@@ -1,5 +1,5 @@
 export class Usuario {
-    cdUsuario: string;
+    cdUsuario: number;
     nmUsuario: string;
     cpf: string;
     email: string;
@@ -7,7 +7,7 @@ export class Usuario {
     role: string;
 
     constructor() {
-        this.cdUsuario = "";
+        this.cdUsuario = 0;
         this.nmUsuario = "";
         this.cpf = "";
         this.email = "";
