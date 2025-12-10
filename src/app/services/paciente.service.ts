@@ -91,7 +91,7 @@ export class PacienteService {
         return false;
       } else {
         pacientes.splice(index, 1);
-        localStorage.setItem("usuarios", JSON.stringify(pacientes));
+        localStorage.setItem("pacientes", JSON.stringify(pacientes));
         return true;
       }
     }

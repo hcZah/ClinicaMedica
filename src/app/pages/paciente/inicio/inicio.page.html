@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Início</ion-title>
+    <ion-buttons slot="end">
+      <a class="" (click)="paraLogin()"><ion-icon name="exit" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-grid class="mt-32">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button type="submit" [routerLink]="['/agendamento']" expand="block">Marcar Atendimento</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h2 class="mt-16">Consultas marcadas:</h2>
+
+
+  <ion-text *ngIf="agendamentos.length == 0" color="medium">
+    <p>Nenhuma consulta foi cadastrada até o momento.</p>
+  </ion-text>
+
+  <ion-list *ngIf="agendamentos.length != 0">
+    <ion-item *ngFor="let agendamento of agendamentos; let i = index" detail>
+      <ion-label>
+        <p style='display:inline'> Data: </p>
+        <h2 style='display:inline'> {{agendamento.dtAgendamento}}</h2>
+        <br>
+        <p style='display:inline'> Horário: </p>
+        <h2 style='display:inline'> {{agendamento.hrAgendamento}}</h2>
+        <br>
+        <p style='display:inline'> Médico: </p>
+        <h2 style='display:inline'> -- </h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

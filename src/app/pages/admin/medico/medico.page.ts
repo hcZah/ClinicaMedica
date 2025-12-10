@@ -6,6 +6,7 @@ import { Medico } from 'src/app/model/medico';
 import { Usuario } from 'src/app/model/usuario';
 import { MedicoService } from 'src/app/services/medico.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import type { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-medico',
@@ -98,6 +99,17 @@ export class MedicoPage implements OnInit {
         }
       }
     }
+
+excluir(event: CustomEvent<OverlayEventDetail>) {
+    let role = event.detail.role;
+
+    if (role == 'confirm') {
+      this.medicoService.deleteMedico(this.usuario.cdUsuario);
+      this.usuarioService.deleteUsuario(this.usuario.cdUsuario);
+    } else if (role == 'cancel') {
+      //
+    }
+  }
   
     async exibirMensagem(texto: string) {
       const toast = await this.toastController.create({

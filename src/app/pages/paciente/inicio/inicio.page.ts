@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewWillEnter } from '@ionic/angular';
+import { Agendamento } from 'src/app/model/agendamento';
+import { AgendamentoService } from 'src/app/services/agendamento.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -8,11 +10,15 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./inicio.page.scss'],
   standalone: false,
 })
-export class InicioPage implements OnInit {
+export class InicioPage implements ViewWillEnter {
+  
+  agendamentos: Agendamento[];
 
-  constructor(private usuarioService: UsuarioService, private navController: NavController) { }
+  constructor(private usuarioService: UsuarioService, private navController: NavController, private agendamentoService: AgendamentoService) { 
+    this.agendamentos = [];
+  }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     var usuarioAutenticado = this.usuarioService.recuperarUsuario();
     if (usuarioAutenticado == null || usuarioAutenticado.cdUsuario == 0 || usuarioAutenticado.role != "pac") {
       if (usuarioAutenticado.role == "med") {
@@ -23,6 +29,8 @@ export class InicioPage implements OnInit {
         this.navController.navigateBack("/login");
       }
     }
+
+    this.agendamentos = this.agendamentoService.getAgendamentosPorPaciente(usuarioAutenticado.cdUsuario);
   }
 
   paraLogin() {

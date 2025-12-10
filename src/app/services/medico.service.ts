@@ -122,4 +122,22 @@ export class MedicoService {
     console.log("valido");
     return true;
   }
+
+  deleteMedico(cdUsuario: number): boolean {
+    let medicos = this.getMedicos();
+
+    if (!Array.isArray(medicos)) {
+      return false;
+    } else {
+      let index = medicos.findIndex((m: Medico) => m.cdUsuario = cdUsuario);
+
+      if (index == -1) {
+        return false;
+      } else {
+        medicos.splice(index, 1);
+        localStorage.setItem("medicos", JSON.stringify(medicos));
+        return true;
+      }
+    }
+  }
 }

@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Início</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding center">
+
+  <div class="container">
+    <div class="calendar">
+      <div class="header">
+        <div class="title"><h1>{{this.mesString}} {{this.ano}}</h1></div>
+        <p class="botoes"><ion-icon (click)="mudarMes(-1)" name="chevron-back-outline" size="large"></ion-icon><ion-icon (click)="mudarMes(+1)" name="chevron-forward-outline" size="large"></ion-icon></p>
+      </div>
+
+
+      <div class="weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+
+      <div class="grid mt-16">
+        <!--
+        <div class="cell empty"></div>
+        <div class="cell">
+          <img style="filter: hue-rotate(110deg) brightness(110%);" src="../../../assets/imagens/circulo.png">
+          <div class="num">1</div>
+        </div>
+        <div class="cell">
+          <img style="filter: saturate(70%) brightness(110%);" src="../../../assets/imagens/circulo.png">
+          <div class="num">1</div>
+        </div>
+        -->
+
+        <div *ngFor="let numero of numerosAntes">
+          <div class="cell empty"></div>
+        </div>
+        <div *ngFor="let numero of numeros; index as i">
+          <div *ngIf="this.fimDeSemana(i + 1) || this.antesDeHoje(i + 1); then fimDeSemana else diaUtil">
+          </div>
+          <ng-template #fimDeSemana>
+            <div class="cell">
+              <img class="img" style="filter: saturate(0) brightness(150%);" src="../../../assets/imagens/circulo.png" draggable="false">
+              <div class="num">{{this.numeros[i]}}</div>
+            </div>
+          </ng-template>
+          <ng-template #diaUtil>
+            <div (click)="this.irParaDia(i+1)" class="cell">
+              <img class="img" style="filter: hue-rotate(110deg) brightness(110%);" src="../../../assets/imagens/circulo.png" draggable="false">
+              <div class="num">{{this.numeros[i]}}</div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

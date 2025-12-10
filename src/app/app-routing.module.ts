@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/inicio/inicio.module').then(m => m.InicioPageModule)
+    loadChildren: () => import('./pages/paciente/inicio/inicio.module').then(m => m.InicioPageModule)
   },
   {
     path: 'menu-admin',
@@ -47,6 +47,19 @@ const routes: Routes = [
     path: 'pacientes',
     loadChildren: () => import('./pages/admin/pacientes/pacientes.module').then(m => m.PacientesPageModule)
   },
+  {
+    path: 'agendamento',
+    loadChildren: () => import('./pages/paciente/agendamento/agendamento.module').then( m => m.AgendamentoPageModule)
+  },
+  {
+    path: 'agendamento-dia',
+    loadChildren: () => import('./pages/paciente/agendamento-dia/agendamento-dia.module').then( m => m.AgendamentoDiaPageModule)
+  },
+  {
+    path: 'agendamento-dia/:ano/:mes/:dia',
+    loadChildren: () => import('./pages/paciente/agendamento-dia/agendamento-dia.module').then( m => m.AgendamentoDiaPageModule)
+  },
+
 ];
 
 @NgModule({
