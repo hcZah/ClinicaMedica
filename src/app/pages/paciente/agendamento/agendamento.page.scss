@@ -3,6 +3,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.selects {
+    width: 90vmin;
+    max-width: 95vw;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.selectBundle {
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.select {
+    width: 80%;
+}
+
+ion-select.ion-valid {
+  --highlight-color-valid: initial; /* Set to default or another color */
 }
 
 .calendar {

@@ -8,7 +8,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   selector: 'app-especialidades',
   templateUrl: './especialidades.page.html',
   styleUrls: ['./especialidades.page.scss'],
-    standalone: false,
+  standalone: false,
 })
 export class EspecialidadesPage implements ViewWillEnter {
   especialidades: Especialidade[];
