@@ -105,7 +105,9 @@ export class AgendamentoPage implements ViewWillEnter {
     }
   }
 
-  diaDisponivel(dia: number)
+  diaDisponivel(dia: number): boolean {
+    return true;
+  }
 
   irParaDia(dia: number) {
     this.router.navigate(["/agendamento-dia", this.ano, this.mes, dia]);

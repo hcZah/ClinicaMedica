@@ -85,7 +85,7 @@ export class PacienteService {
     if (!Array.isArray(pacientes)) {
       return false;
     } else {
-      let index = pacientes.findIndex((p: Paciente) => p.cdUsuario = cdUsuario);
+      let index = pacientes.findIndex((p: Paciente) => p.cdUsuario == cdUsuario);
 
       if (index == -1) {
         return false;

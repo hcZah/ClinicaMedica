@@ -160,12 +160,10 @@ export class UsuarioService {
     } else {
       let index = usuarios.findIndex((u: Usuario) => u.cdUsuario == usuario.cdUsuario);
       if (index == -1) {
-        alert("index")
         return false;
       }
       usuarios[index] = usuario;
     }
-    alert(usuario.cdUsuario)
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
@@ -219,7 +217,7 @@ export class UsuarioService {
     if (!Array.isArray(usuarios)) {
       return false;
     } else {
-      let index = usuarios.findIndex((u: Usuario) => u.cdUsuario = cdUsuario);
+      let index = usuarios.findIndex((u: Usuario) => u.cdUsuario == cdUsuario);
 
       if (index == -1) {
         return false;

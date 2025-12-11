@@ -8,8 +8,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" >
-    <form [formGroup]="formGroup" (ngSubmit)="cadastrar()" class="">
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="cadastrar()" class="">
     <ion-item>
       <ion-label position="stacked" class="label">Nome Completo:</ion-label>
       <ion-input type="text" formControlName="nome"></ion-input>
@@ -34,6 +34,18 @@
       <ion-label position="stacked" class="label">Confirme a senha:</ion-label>
       <ion-input type="password" formControlName="senhaConfirmacao"></ion-input>
     </ion-item>
-    <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+
+    <div *ngIf="usuario.cdUsuario != 0; then existe else naoExiste"></div>
+
+    <ng-template #existe>
+      <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Alterar</ion-button>
+      <ion-button *ngIf="usuario.cdUsuario != 0" color="danger" expand="block" id="excluir">Excluir</ion-button>
+      <ion-alert trigger="excluir" header="Excluir permanentemente?" [buttons]="alertButtons"
+        (didDismiss)="excluir($event)"></ion-alert>
+    </ng-template>
+
+    <ng-template #naoExiste>
+      <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+    </ng-template>
   </form>
 </ion-content>

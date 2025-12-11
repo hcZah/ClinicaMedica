@@ -7,6 +7,19 @@ export class CalendarioService {
 
   constructor() { }
 
+  numeroParaDiaDaSemana(numero: number): string {
+    switch (numero) {
+    case 0: return "Domingo";
+    case 1: return "Segunda-feira";
+    case 2: return "Terça-feira";
+    case 3: return "Quarta-feira";
+    case 4: return "Quinta-feira";
+    case 5: return "Sexta-feira";
+    case 6: return "Sábado";
+    default: return "Número inválido";
+  }
+  }
+
   numeroParaMes(n: number): string {
     switch (n) {
       case 1: return "Janeiro";

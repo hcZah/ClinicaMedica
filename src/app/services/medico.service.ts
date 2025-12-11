@@ -57,7 +57,6 @@ export class MedicoService {
 */
 
  cadastro(medico: Medico): boolean {
-    alert(medico.cdUsuario)
     if (medico.cdUsuario == 0) {
       console.log("invalido");
       return false;
@@ -129,7 +128,7 @@ export class MedicoService {
     if (!Array.isArray(medicos)) {
       return false;
     } else {
-      let index = medicos.findIndex((m: Medico) => m.cdUsuario = cdUsuario);
+      let index = medicos.findIndex((m: Medico) => m.cdUsuario == cdUsuario);
 
       if (index == -1) {
         return false;

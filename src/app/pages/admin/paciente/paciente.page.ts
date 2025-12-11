@@ -119,6 +119,7 @@ export class PacientePage implements OnInit {
     if (role == 'confirm') {
       this.pacienteService.deletePaciente(this.usuario.cdUsuario);
       this.usuarioService.deleteUsuario(this.usuario.cdUsuario);
+      this.back();
     } else if (role == 'cancel') {
       //
     }

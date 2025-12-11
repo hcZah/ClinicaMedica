@@ -59,6 +59,19 @@ const routes: Routes = [
     path: 'agendamento-dia/:ano/:mes/:dia',
     loadChildren: () => import('./pages/paciente/agendamento-dia/agendamento-dia.module').then( m => m.AgendamentoDiaPageModule)
   },
+  {
+    path: 'agendamentos-medico',
+    loadChildren: () => import('./pages/medico/agendamentos-medico/agendamentos-medico.module').then( m => m.AgendamentosMedicoPageModule)
+  },  {
+    path: 'especialidade',
+    loadChildren: () => import('./pages/admin/especialidade/especialidade.module').then( m => m.EspecialidadePageModule)
+  },
+  {
+    path: 'especialidades',
+    loadChildren: () => import('./pages/admin/especialidades/especialidades.module').then( m => m.EspecialidadesPageModule)
+  },
+
+
 
 ];
 
