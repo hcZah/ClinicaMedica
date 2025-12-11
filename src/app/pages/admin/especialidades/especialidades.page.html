@@ -1,13 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>especialidades</ion-title>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Especialidades</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">especialidades</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-searchbar [debounce]="500" show-clear-button="always" class="mt-16" (ionInput)="pesquisar($event)" placeholder="Pesquisar"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let especialidade of especialidadesExpostas" [routerLink]="['/especialidade/', especialidade.cdEspecialidade]" detail>
+      <ion-label>
+        <p style='display:inline'> Nome: </p>
+        <h2 style='display:inline'> {{especialidade.desc}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/especialidade" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

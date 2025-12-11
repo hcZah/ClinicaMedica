@@ -51,8 +51,8 @@ export class PacientePage implements OnInit {
     if (usuarioAutenticado == null || usuarioAutenticado.cdUsuario == 0 || usuarioAutenticado.role != "adm") {
       if (usuarioAutenticado.role == "pac") {
         this.navController.navigateForward("/inicio");
-      } else if (usuarioAutenticado.role == "adm") {
-        this.navController.navigateForward("/menu-admin");
+      } else if (usuarioAutenticado.role == "med") {
+        this.navController.navigateForward("/agendamentos-medico");
       } else {
         this.navController.navigateBack("/login");
       }

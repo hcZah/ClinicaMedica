@@ -62,8 +62,13 @@ const routes: Routes = [
   {
     path: 'agendamentos-medico',
     loadChildren: () => import('./pages/medico/agendamentos-medico/agendamentos-medico.module').then( m => m.AgendamentosMedicoPageModule)
-  },  {
+  },
+  {
     path: 'especialidade',
+    loadChildren: () => import('./pages/admin/especialidade/especialidade.module').then( m => m.EspecialidadePageModule)
+  },
+  {
+    path: 'especialidade/:cdEspecialidade',
     loadChildren: () => import('./pages/admin/especialidade/especialidade.module').then( m => m.EspecialidadePageModule)
   },
   {

@@ -1,13 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>especialidade</ion-title>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Adicionar Especialidade</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">especialidade</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="formGroup" (ngSubmit)="cadastrar()" class="">
+    <ion-item>
+      <ion-label position="stacked" class="label">Especialidade:</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+    <div *ngIf="especialidade.cdEspecialidade != 0; then existe else naoExiste"></div>
+
+    <ng-template #existe>
+      <ion-button class="mt-16" type="submit" expand="block" [disabled]="!formGroup.valid">Alterar</ion-button>
+      <ion-button *ngIf="especialidade.cdEspecialidade != 0" color="danger" expand="block" id="excluir">Excluir</ion-button>
+      <ion-alert trigger="excluir" header="Excluir permanentemente?" [buttons]="alertButtons"
+        (didDismiss)="excluir($event)"></ion-alert>
+    </ng-template>
+
+    <ng-template #naoExiste>
+      <ion-button class="mt-16" type="submit" expand="block" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+    </ng-template>
+
+  </form>
 </ion-content>
