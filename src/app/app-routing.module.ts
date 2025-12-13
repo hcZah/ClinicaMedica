@@ -56,7 +56,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/paciente/agendamento-dia/agendamento-dia.module').then( m => m.AgendamentoDiaPageModule)
   },
   {
-    path: 'agendamento-dia/:ano/:mes/:dia',
+    path: 'agendamento-dia/:ano/:mes/:dia/:cdMedico/:cdEspecialidade',
     loadChildren: () => import('./pages/paciente/agendamento-dia/agendamento-dia.module').then( m => m.AgendamentoDiaPageModule)
   },
   {

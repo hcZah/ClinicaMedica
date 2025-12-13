@@ -7,6 +7,8 @@ import { Usuario } from 'src/app/model/usuario';
 import { MedicoService } from 'src/app/services/medico.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import type { OverlayEventDetail } from '@ionic/core';
+import { EspecialidadeService } from 'src/app/services/especialidade.service';
+import { Especialidade } from 'src/app/model/especialidade';
 
 @Component({
   selector: 'app-medico',
@@ -22,6 +24,10 @@ export class MedicoPage implements OnInit {
 
   formGroup: FormGroup;
 
+  especialidade: Especialidade;
+  especialidades: Especialidade[];
+  especialidadesMedico: Especialidade[];
+
   public alertButtons = [
     {
       text: 'Cancelar',
@@ -33,10 +39,14 @@ export class MedicoPage implements OnInit {
     },
   ];
 
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private navController: NavController, private usuarioService: UsuarioService, private toastController: ToastController, private medicoService: MedicoService) {
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private navController: NavController, private usuarioService: UsuarioService, private toastController: ToastController, private medicoService: MedicoService, private especialidadeService: EspecialidadeService) {
     this.usuario = new Usuario();
     this.senhaConfirmacao = "";
     this.crm = "";
+
+    this.especialidade = new Especialidade();
+    this.especialidades = [];
+    this.especialidadesMedico = [];
 
     this.formGroup = this.formBuilder.group({
       'nome': [this.usuario.nmUsuario, Validators.compose([Validators.required])],
@@ -73,6 +83,9 @@ export class MedicoPage implements OnInit {
     this.formGroup.get('email')?.setValue(this.usuario.email);
     this.formGroup.get('senha')?.setValue(this.usuario.senha);
     this.formGroup.get('senhaConfirmacao')?.setValue(this.usuario.senha);
+
+    this.especialidadesMedico = this.especialidadeService.getEspecialidadesPorMedico(this.usuario.cdUsuario);
+    this.especialidades = this.especialidadeService.getEspecialidades().filter((e: Especialidade) => !this.medicoTemEspecialidade(e));
   }
 
   cadastrar() {
@@ -121,6 +134,34 @@ export class MedicoPage implements OnInit {
     } else if (role == 'cancel') {
       //
     }
+  }
+
+  addEspecialidade() {
+    this.medicoService.addEspecialidade(this.usuario.cdUsuario, this.especialidade.cdEspecialidade);
+    this.especialidades = this.especialidadeService.getEspecialidades().filter((e: Especialidade) => !this.medicoTemEspecialidade(e));
+  }
+
+  apagarEspecialidade(cdEspecialidade: number) {
+    this.medicoService.apagarEspecialidade(this.usuario.cdUsuario, cdEspecialidade);
+    this.especialidades = this.especialidadeService.getEspecialidades().filter((e: Especialidade) => !this.medicoTemEspecialidade(e));
+  }
+
+  medicoTemEspecialidade(e: Especialidade): boolean {
+    this.especialidadesMedico = this.especialidadeService.getEspecialidadesPorMedico(this.usuario.cdUsuario);
+
+    let tem = false;
+    for (const em of this.especialidadesMedico) {
+      if (em.cdEspecialidade == e.cdEspecialidade) {
+        tem = true; 
+        break;
+      }
+    }
+
+    return tem;
+  }
+
+  especialidadeMudou(event: any) {
+    this.especialidade = this.especialidadeService.getEspecialidade(event.detail.value);
   }
 
   async exibirMensagem(texto: string) {

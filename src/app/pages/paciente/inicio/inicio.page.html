@@ -28,10 +28,10 @@
     <ion-item *ngFor="let agendamento of agendamentos; let i = index" detail>
       <ion-label>
         <p style='display:inline'> Data: </p>
-        <h2 style='display:inline'> {{agendamento.dtAgendamento}}</h2>
+        <h2 style='display:inline'> {{agendamento.dia}}/{{agendamento.mes}}/{{agendamento.ano}}</h2>
         <br>
         <p style='display:inline'> Horário: </p>
-        <h2 style='display:inline'> {{agendamento.hrAgendamento}}</h2>
+        <h2 style='display:inline'> {{this.formatarHora(agendamento.hora)}}</h2>
         <br>
         <p style='display:inline'> Médico: </p>
         <h2 style='display:inline'> -- </h2>

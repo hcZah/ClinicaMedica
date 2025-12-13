@@ -14,10 +14,18 @@
     justify-content: space-between;
 }
 
-.selectBundle {
+.selectBundleL {
     width: 90%;
     display: flex;
     align-items: center;
+    justify-content: start;
+}
+
+.selectBundleR {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
 
 .select {

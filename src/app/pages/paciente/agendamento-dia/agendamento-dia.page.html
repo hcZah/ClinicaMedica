@@ -27,170 +27,31 @@
       </ion-col>
       <ion-col size="2"></ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>10:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>11:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>11:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>13:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>13:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>14:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>14:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>15:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>15:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>16:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>16:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>17:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>17:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>18:00</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="4" class="texto">
-        <h4>18:30</h4>
-      </ion-col>
-      <ion-col size="4" class="texto">
-        <h4>Disponível</h4>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-
+    <ion-row style="height: 2vmin;"></ion-row>
+    <div *ngFor="let horario of horarios">
+      <ion-row (click)="agendar(horario)">
+        <ion-col size="2"></ion-col>
+        <ion-col size="8">
+          <ion-grid class="botao-horario">
+            <ion-row>
+              <ion-col size="6" class="texto">
+                <h4>{{horario}}</h4>
+              </ion-col>
+              <ion-col size="6" class="texto">
+                <h4>Disponível</h4>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="2"></ion-col>
+        <ion-col size="8">
+          <hr class="divisor">
+        </ion-col>
+        <ion-col size="2"></ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

@@ -1,17 +1,24 @@
 export class Agendamento {
     cdAgendamento: number;
+
     cdPaciente: number;
     cdMedico: number;
     cdEspecialidade: number;
-    dtAgendamento: string;
-    hrAgendamento: string;
+
+    dia: number;
+    mes: number;
+    ano: number;
+
+    hora: number;
 
     constructor() {
         this.cdAgendamento = 0;
         this.cdPaciente = 0;
         this.cdMedico = 0;
         this.cdEspecialidade = 0;
-        this.dtAgendamento = "00/00/0000";
-        this.hrAgendamento = "00:00";
+        this.dia = 0;
+        this.mes = 0;
+        this.ano = 0;
+        this.hora = -1;
     }
 }

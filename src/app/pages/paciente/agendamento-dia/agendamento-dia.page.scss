@@ -12,3 +12,22 @@
 .texto {
     text-align: center;
 }
+
+.divisor {
+    border: none;
+    height: 1px;
+    background: #c9c9c9;
+    /* cinza suave */
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.botao-horario:hover {
+    width: 100%;
+    background-color: #dfdeec;
+}
+
+.botao-horario:active {
+    width: 100%;
+    background-color: #c8c7d3;
+}

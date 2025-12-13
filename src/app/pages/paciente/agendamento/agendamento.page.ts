@@ -5,6 +5,7 @@ import { Especialidade } from 'src/app/model/especialidade';
 import { Medico } from 'src/app/model/medico';
 import { Usuario } from 'src/app/model/usuario';
 import { CalendarioService } from 'src/app/services/calendario.service';
+import { EspecialidadeService } from 'src/app/services/especialidade.service';
 import { MedicoService } from 'src/app/services/medico.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -35,7 +36,7 @@ export class AgendamentoPage implements ViewWillEnter {
   especialidades: Especialidade[];
   selecionadoEspecialidade: any;
 
-  constructor(private toastController: ToastController, private navController: NavController, private usuarioService: UsuarioService, private calendarioService: CalendarioService, private router: Router, private medicoService: MedicoService) {
+  constructor(private toastController: ToastController, private navController: NavController, private usuarioService: UsuarioService, private calendarioService: CalendarioService, private router: Router, private medicoService: MedicoService, private especialidadeService: EspecialidadeService) {
     let data = new Date();
 
     this.mes = data.getMonth() + 1;
@@ -80,6 +81,11 @@ export class AgendamentoPage implements ViewWillEnter {
     this.medicos = this.medicoService.getMedicos();
     if (!Array.isArray(this.medicos)) {
       this.medicos = [];
+    }
+
+    this.especialidades = this.especialidadeService.getEspecialidades();
+    if (!Array.isArray(this.especialidades)) {
+      this.especialidades = [];
     }
   }
 
@@ -135,10 +141,10 @@ export class AgendamentoPage implements ViewWillEnter {
   }
 
   irParaDia(dia: number) {
-    if (this.medico.cdUsuario != 0 || this.especialidade.cdEspecialidade != 0) {
-      this.router.navigate(["/agendamento-dia", this.ano, this.mes, dia]);
+    if (this.medico.cdUsuario != 0 && this.especialidade.cdEspecialidade != 0) {
+      this.router.navigate(["/agendamento-dia", this.ano, this.mes, dia, this.medico.cdUsuario, this.especialidade.cdEspecialidade]);
     } else {
-      this.exibirMensagem("Selecione pelo menos o médico ou a especialidade.")
+      this.exibirMensagem("Selecione o médico e a especialidade.")
     }
   }
 
@@ -151,16 +157,24 @@ export class AgendamentoPage implements ViewWillEnter {
     return usuario.nmUsuario;
   }
 
-  onSelectMudou(event: any) {
+  onSelectMedicoMudou(event: any) {
     this.medico = this.medicoService.getMedico(event.detail.value);
+    this.especialidades = this.especialidadeService.getEspecialidadesPorMedico(this.medico.cdUsuario);
+  }
+
+  onSelectEspecialidadeMudou(event: any) {
+    this.especialidade = this.especialidadeService.getEspecialidade(event.detail.value);
+    this.medicos = this.medicoService.getMedicosPorEspecialidade(this.especialidade.cdEspecialidade);
   }
 
   clearSelectMedico() {
     this.selecionadoMedico = null;
+    this.especialidades = this.especialidadeService.getEspecialidades();
   }
 
   clearSelectEspecialidade() {
     this.selecionadoEspecialidade = null;
+    this.medicos = this.medicoService.getMedicos();
   }
 
   async exibirMensagem(texto: string) {

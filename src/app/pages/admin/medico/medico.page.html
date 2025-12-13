@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <form [formGroup]="formGroup" (ngSubmit)="cadastrar()" class="">
     <ion-item>
       <ion-label position="stacked" class="label">Nome Completo:</ion-label>
@@ -42,6 +42,22 @@
       <ion-button *ngIf="usuario.cdUsuario != 0" color="danger" expand="block" id="excluir">Excluir</ion-button>
       <ion-alert trigger="excluir" header="Excluir permanentemente?" [buttons]="alertButtons"
         (didDismiss)="excluir($event)"></ion-alert>
+
+      <ion-select class="mt-16" label="Especialidade" label-placement="floating" (ionChange)="especialidadeMudou($event)">
+        <div *ngFor="let especialidade of especialidades">
+          <ion-select-option value="{{especialidade.cdEspecialidade}}">{{especialidade.desc}}</ion-select-option>
+        </div>
+      </ion-select>
+      <ion-button expand="block" [disabled]="especialidade.cdEspecialidade == 0" (click)="this.addEspecialidade()">Adicionar Especialidade</ion-button>
+
+      <ion-list class="mt-16">
+        <div *ngFor="let especialidade of especialidadesMedico">
+          <ion-item>
+            <ion-label>{{especialidade.desc}}</ion-label>
+            <ion-icon name="trash" (click)="apagarEspecialidade(especialidade.cdEspecialidade)"></ion-icon>
+          </ion-item>
+        </div>
+      </ion-list>
     </ng-template>
 
     <ng-template #naoExiste>

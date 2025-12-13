@@ -3,13 +3,14 @@ import { Observable } from 'rxjs';
 import { Medico } from '../model/medico';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../model/usuario';
+import { EspecialidadeMedico } from '../model/especialidade-medico';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicoService {
   private apiUrl = 'http://localhost:8080/api/v1/medico';
- 
+
   private headerDict = {
     'Access-Control-Allow-Origin': '*',
   };
@@ -19,44 +20,44 @@ export class MedicoService {
   };
 
   constructor(private http: HttpClient) { }
-/*
-  autenticar(email: String, senha: String): Observable<Medico> {
+  /*
+    autenticar(email: String, senha: String): Observable<Medico> {
+  
+      const objetoJS = {
+        email: email,
+        senha: senha
+      };
+  
+      const objetoJson = JSON.stringify(objetoJS);
+  
+      const apiUrlTemp = this.apiUrl + "/auth";
+  
+      return this.http.post<Medico>(apiUrlTemp, objetoJson);
+    }
+  
+    getAll() {
+      const apiUrlTemp = this.apiUrl + "/"
+      return this.http.get<Medico[]>(apiUrlTemp, this.requestOptions);
+    }
+  
+    //localStorage
+    carregar(): Medico {
+      let paciente = JSON.parse(localStorage.getItem('pacienteAutenticado') || '{}');
+      return paciente;
+    }
+  
+    //localStorage
+    registrar(medico: Medico) {
+      localStorage.setItem('PacienteAutenticado', JSON.stringify(medico));
+    }
+  
+    //localStorage
+    encerrar() {
+      localStorage.removeItem('pacienteAutenticado');
+    }
+  */
 
-    const objetoJS = {
-      email: email,
-      senha: senha
-    };
-
-    const objetoJson = JSON.stringify(objetoJS);
-
-    const apiUrlTemp = this.apiUrl + "/auth";
-
-    return this.http.post<Medico>(apiUrlTemp, objetoJson);
-  }
-
-  getAll() {
-    const apiUrlTemp = this.apiUrl + "/"
-    return this.http.get<Medico[]>(apiUrlTemp, this.requestOptions);
-  }
-
-  //localStorage
-  carregar(): Medico {
-    let paciente = JSON.parse(localStorage.getItem('pacienteAutenticado') || '{}');
-    return paciente;
-  }
-
-  //localStorage
-  registrar(medico: Medico) {
-    localStorage.setItem('PacienteAutenticado', JSON.stringify(medico));
-  }
-
-  //localStorage
-  encerrar() {
-    localStorage.removeItem('pacienteAutenticado');
-  }
-*/
-
- cadastro(medico: Medico): boolean {
+  cadastro(medico: Medico): boolean {
     if (medico.cdUsuario == 0) {
       console.log("invalido");
       return false;
@@ -88,7 +89,7 @@ export class MedicoService {
     return JSON.parse(localStorage.getItem('medicos') || '{}');
   }
 
-  getMedico(cdUsuario: number): Medico { 
+  getMedico(cdUsuario: number): Medico {
     var medicos: Medico[] = this.getMedicos();
 
     if (!Array.isArray(medicos)) {
@@ -137,6 +138,50 @@ export class MedicoService {
         localStorage.setItem("medicos", JSON.stringify(medicos));
         return true;
       }
+    }
+  }
+
+  getMedicosPorEspecialidade(cdEspecialidade: number): Medico[] {
+    let especialidadesMedicos: EspecialidadeMedico[] = JSON.parse(localStorage.getItem('especialidade-medico') || '{}');
+    if (!Array.isArray(especialidadesMedicos)) {
+      especialidadesMedicos = [];
+    }
+
+    let especialidadesMedicos_filter = especialidadesMedicos.filter((em: EspecialidadeMedico) => em.cdEspecialidade == cdEspecialidade);
+
+    let medicos: Medico[] = [];
+    for (let i = 0; i < especialidadesMedicos_filter.length; i++) {
+      medicos.push(this.getMedico(especialidadesMedicos_filter[i].cdMedico));
+    }
+
+    return medicos;
+  }
+
+  addEspecialidade(cdMedico: number, cdEspecialidade: number) {
+    let especialidadeMedico = new EspecialidadeMedico();
+    especialidadeMedico.cdEspecialidade = cdEspecialidade;
+    especialidadeMedico.cdMedico = cdMedico;
+
+    let especialidadesMedicos = JSON.parse(localStorage.getItem('especialidade-medico') || '{}');
+    if (!Array.isArray(especialidadesMedicos)) {
+      especialidadesMedicos = [];
+    }
+
+    especialidadesMedicos.push(especialidadeMedico);
+    localStorage.setItem('especialidade-medico', JSON.stringify(especialidadesMedicos));
+  }
+
+  apagarEspecialidade(cdMedico: number, cdEspecialidade: number) {
+    let especialidadesMedicos: EspecialidadeMedico[] = JSON.parse(localStorage.getItem('especialidade-medico') || '{}');
+    if (!Array.isArray(especialidadesMedicos)) {
+      especialidadesMedicos = [];
+    }
+
+    let index = especialidadesMedicos.findIndex((em: EspecialidadeMedico) => em.cdEspecialidade == cdEspecialidade && em.cdMedico == cdMedico);
+
+    if (index != -1) {
+      especialidadesMedicos.splice(index, 1);
+      localStorage.setItem('especialidade-medico', JSON.stringify(especialidadesMedicos));
     }
   }
 }

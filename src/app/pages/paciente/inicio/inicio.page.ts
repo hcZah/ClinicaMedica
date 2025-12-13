@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ViewWillEnter } from '@ionic/angular';
 import { Agendamento } from 'src/app/model/agendamento';
 import { AgendamentoService } from 'src/app/services/agendamento.service';
+import { HorarioService } from 'src/app/services/horario.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class InicioPage implements ViewWillEnter {
   
   agendamentos: Agendamento[];
 
-  constructor(private usuarioService: UsuarioService, private navController: NavController, private agendamentoService: AgendamentoService) { 
+  constructor(private horarioService: HorarioService, private usuarioService: UsuarioService, private navController: NavController, private agendamentoService: AgendamentoService) { 
     this.agendamentos = [];
   }
 
@@ -31,6 +32,10 @@ export class InicioPage implements ViewWillEnter {
     }
 
     this.agendamentos = this.agendamentoService.getAgendamentosPorPaciente(usuarioAutenticado.cdUsuario);
+  }
+
+  formatarHora(hora: number): string {
+    return this.horarioService.numeroParaString(hora);
   }
 
   paraLogin() {

@@ -12,23 +12,23 @@
 
   <div class="container">
     <div class="selects">
-      <div class="selectBundle">
-        <ion-select class="select" label="Médico" label-placement="floating" (ionChange)="onSelectMudou($event)"
+      <div class="selectBundleL">
+        <ion-select class="select" label="Médico" label-placement="floating" (ionChange)="onSelectMedicoMudou($event)"
           [(ngModel)]="selecionadoMedico">
           <div *ngFor="let medico of medicos">
             <ion-select-option value="{{medico.cdUsuario}}">{{this.nomeMedico(medico.cdUsuario)}}</ion-select-option>
           </div>
         </ion-select>
-        <ion-icon class="x" name="close-outline" color="danger" size="large" (click)="clearSelectMedico()"></ion-icon>
+        <ion-icon class="x" name="close-outline" size="large" (click)="clearSelectMedico()"></ion-icon>
       </div>
-      <div class="selectBundle">
-        <ion-select class="select" label="Médico" label-placement="floating" (ionChange)="onSelectMudou($event)"
-          [(ngModel)]="selecionadoMedico">
+      <div class="selectBundleR">
+        <ion-select class="select" label="Especialidade" label-placement="floating" (ionChange)="onSelectEspecialidadeMudou($event)"
+          [(ngModel)]="selecionadoEspecialidade">
           <div *ngFor="let especialidade of especialidades">
-            <ion-select-option value="{{especialidade.cdEspecialidade}}">{{this.especialidade.desc}}</ion-select-option>
+            <ion-select-option value="{{especialidade.cdEspecialidade}}">{{especialidade.desc}}</ion-select-option>
           </div>
         </ion-select>
-        <ion-icon class="x" name="close-outline" color="danger" size="large" (click)="clearSelectMedico()"></ion-icon>
+        <ion-icon class="x" name="close-outline" size="large" (click)="clearSelectEspecialidade()"></ion-icon>
       </div>
     </div>
     <div class="calendar">
