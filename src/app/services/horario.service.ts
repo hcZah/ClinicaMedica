@@ -38,13 +38,23 @@ export class HorarioService {
   }
 
   numeroParaString(horario: number): string {
-    let horas = Math.floor(horario / 100);
-    let minutos = horario % 100;
+    let horas: number = Math.floor(horario / 100);
+    let minutos: number = horario % 100;
 
     if (horas < 0 || horas > 23 || minutos < 0 || minutos > 60) {
       return "Horário inválido.";
     } else {
-      return horas + ":" + minutos;
+      let minutos_str: string = `${minutos}`;
+      let horas_str: string = `${horas}`;
+
+      if (minutos < 10) {
+        minutos_str = "0" + minutos_str;
+      }
+      if (horas < 10) {
+        horas_str = "0" + horas_str;
+      }
+
+      return horas_str + ":" + minutos_str;
     }
   }
 

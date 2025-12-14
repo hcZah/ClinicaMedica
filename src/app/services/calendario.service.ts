@@ -59,6 +59,20 @@ export class CalendarioService {
     }
   }
 
+  numerosParaData(dia: number, mes: number, ano: number) {
+    let dia_str: string  = `${dia}`;
+    if (dia < 10) {
+      dia_str = 0 + dia_str;
+    }
+
+    let mes_str: string  = `${mes}`;
+    if (mes < 10) {
+      mes_str = 0 + mes_str;
+    }
+
+    return dia_str + "/" + mes_str + "/" + ano;
+  }
+
   diaDaSemana(dia: number, mes: number, ano: number): number {
     let codAno = ((ano % 100) + (Math.floor((ano % 100) / 4))) % 7;
 

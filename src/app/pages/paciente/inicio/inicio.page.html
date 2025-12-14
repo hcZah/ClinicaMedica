@@ -3,7 +3,7 @@
     <ion-title>Clinica Médica</ion-title>
     <ion-title size="small" class="subtitle">Início</ion-title>
     <ion-buttons slot="end">
-      <a class="" (click)="paraLogin()"><ion-icon name="exit" color="light" size="large"></ion-icon></a>
+      <a class="" (click)="paraLogin()"><ion-icon name="exit-outline" color="light" size="large"></ion-icon></a>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,22 +20,33 @@
   <h2 class="mt-16">Consultas marcadas:</h2>
 
 
-  <ion-text *ngIf="agendamentos.length == 0" color="medium">
-    <p>Nenhuma consulta foi cadastrada até o momento.</p>
+  <ion-text *ngIf="agendamentos.length == 0">
+    <h5 style="color: rgb(153, 156, 160)">Nenhuma consulta foi cadastrada até o momento.</h5>
   </ion-text>
 
   <ion-list *ngIf="agendamentos.length != 0">
-    <ion-item *ngFor="let agendamento of agendamentos; let i = index" detail>
+    <ion-item *ngFor="let agendamento of agendamentos; index as i">
       <ion-label>
         <p style='display:inline'> Data: </p>
-        <h2 style='display:inline'> {{agendamento.dia}}/{{agendamento.mes}}/{{agendamento.ano}}</h2>
+        <h2 style='display:inline'> {{this.formatarData(agendamento.dia, agendamento.mes, agendamento.ano)}}</h2>
         <br>
         <p style='display:inline'> Horário: </p>
         <h2 style='display:inline'> {{this.formatarHora(agendamento.hora)}}</h2>
         <br>
         <p style='display:inline'> Médico: </p>
-        <h2 style='display:inline'> -- </h2>
+        <h2 style='display:inline'> {{this.getNomeMedico(agendamento.cdMedico)}} </h2>
+        <br>
+        <p style='display:inline'> Tipo de consulta: </p>
+        <h2 style='display:inline'> {{this.getNomeEspecialidade(agendamento.cdEspecialidade)}} </h2>
       </ion-label>
+      <ion-icon name="trash-outline" (click)="abrirAlerta(i)"></ion-icon>
+      <ion-alert [isOpen]="alertaAberto[i]" header="Cancelar agendamento permanentemente?"
+        message="Agendamento de {{this.getNomeEspecialidade(agendamento.cdEspecialidade).toLowerCase()}} com Dr(a). {{this.getNomeMedico(agendamento.cdMedico)}} às {{this.formatarHora(agendamento.hora)}} no dia {{this.formatarData(agendamento.dia, agendamento.mes, agendamento.ano)}}" [buttons]="alertButtons"
+        (didDismiss)="cancelarAgendamento($event, agendamento.cdAgendamento, i)" backdropDismiss="false"></ion-alert>
     </ion-item>
   </ion-list>
+  <ion-text>
+    <p style="color: rgb(153, 156, 160)">Consultas só podem ser canceladas pelo site com, no máximo, 7 (sete) dias de
+      antecedência. Para mais informações, ligue para nosso atendimento: (31) 99999-9999.</p>
+  </ion-text>
 </ion-content>

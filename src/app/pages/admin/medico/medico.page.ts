@@ -130,6 +130,7 @@ export class MedicoPage implements OnInit {
     if (role == 'confirm') {
       this.medicoService.deleteMedico(this.usuario.cdUsuario);
       this.usuarioService.deleteUsuario(this.usuario.cdUsuario);
+      
       this.back();
     } else if (role == 'cancel') {
       //
