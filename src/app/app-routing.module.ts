@@ -87,6 +87,15 @@ const routes: Routes = [
     path: 'definir-horarios/:cdMedico',
     loadChildren: () => import('./pages/medico/definir-horarios/definir-horarios.module').then( m => m.DefinirHorariosPageModule)
   },
+  {
+    path: 'criar-horario',
+    loadChildren: () => import('./pages/medico/criar-horario/criar-horario.module').then( m => m.CriarHorarioPageModule)
+  },
+  {
+    path: 'criar-horario/:cdHorario',
+    loadChildren: () => import('./pages/medico/criar-horario/criar-horario.module').then( m => m.CriarHorarioPageModule)
+  },
+
 
 
 

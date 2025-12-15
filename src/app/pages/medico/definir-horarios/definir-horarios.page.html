@@ -4,14 +4,26 @@
       <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
     </ion-buttons>
     <ion-title>Clinica Médica</ion-title>
-    <ion-title size="small" class="subtitle">Agendamento</ion-title>
+    <ion-title size="small" class="subtitle">Definir horários</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">definirHorarios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list>
+    <ion-item *ngFor="let horario of horarios; let i = index" [routerLink]="['/criar-horario/', horario.cdHorario]" detail>
+      <ion-label>
+        <p style='display:inline'> Horário: </p>
+        <h2 style='display:inline'> {{horarios[i].horarioInicio}} às {{horarios[i].horarioFim}} </h2>
+        <br>
+        <p style='display:inline'> Dias da semana: </p>
+        <h2 style='display:inline'*ngFor="let diaSemana of diasSemana; let j = index"> {{horarios[j].diaSemana}};</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/criar-horario" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

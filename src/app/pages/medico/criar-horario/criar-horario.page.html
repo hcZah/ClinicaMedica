@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Adicionar horário</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="formGroup" (ngSubmit)="cadastrar()" class="">
+    <ion-item>
+      <ion-select class="mt-16" label="Horário de Inicio" label-placement="floating">
+        <ion-select-option value="horarioInicio">{{horario.horariosDisponiveis}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select class="mt-16" label="Horário de Fim" label-placement="floating">
+        <ion-select-option value="horarioFim">{{horario.horariosDisponiveis}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select class="mt-16" label="Dia da semana" label-placement="floating">
+        <ion-select-option value="diaSemana">{{horario.diasDisponiveis}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ng-template #existe>
+      <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Alterar</ion-button>
+      <ion-button *ngIf="horario.cdUsuario != 0" color="danger" expand="block" id="excluir">Excluir</ion-button>
+      <ion-alert trigger="excluir" header="Excluir permanentemente?" [buttons]="alertButtons"
+        (didDismiss)="excluir($event)"></ion-alert>
+    </ng-template>
+
+    <ng-template #naoExiste>
+      <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+    </ng-template>
+  </form>
+</ion-content>

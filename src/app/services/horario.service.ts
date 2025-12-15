@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { min } from 'rxjs';
+import { Horario } from '../model/horario';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,29 @@ export class HorarioService {
       "19:00", "19:30"
     ];
   }
+
+  cadastro(horario: Horario): boolean {
+      if (horario.cdHorario == 0) {
+        console.log("invalido");
+        return false;
+      }
+      var horarios: Horario[] = this.getHorarios();
+  
+      if (!Array.isArray(horarios)) {
+        horarios = [];
+      }
+  
+      let index = horarios.findIndex((h: Horario) => h.cdHorario == horario.cdHorario);
+      if (index == -1) {
+        horarios.push(horario);
+        localStorage.setItem('medicos', JSON.stringify(horarios));
+        return true;
+      } else {
+        horarios[index] = horario;
+        localStorage.setItem('medicos', JSON.stringify(horarios));
+        return true;
+      }
+    }
 
   stringParaNumero(s: string): number {
     let horario_string = s.split(":", 2);

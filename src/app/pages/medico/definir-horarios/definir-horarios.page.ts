@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ViewWillEnter } from '@ionic/angular';
+import { Horario } from 'src/app/model/horario';
 import { Medico } from 'src/app/model/medico';
 import { Usuario } from 'src/app/model/usuario';
+import { HorarioService } from 'src/app/services/horario.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -14,9 +16,11 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class DefinirHorariosPage implements ViewWillEnter {
 
   usuario_medico: Usuario;
+  horarios: Horario[];
 
-  constructor(private router: Router,private activatedRoute: ActivatedRoute, private usuarioService: UsuarioService, private navController: NavController) { 
+  constructor(private router: Router,private activatedRoute: ActivatedRoute, private usuarioService: UsuarioService, private navController: NavController, private horarioService: HorarioService) { 
     this.usuario_medico = new Usuario();
+    this.horarios = []
   }
 
   ionViewWillEnter() {
@@ -38,8 +42,11 @@ export class DefinirHorariosPage implements ViewWillEnter {
         this.navController.navigateBack("/login");
       }
     }
+    this.horarios = this.horarioService.getHorarios();
+    if (!Array.isArray(this.horarios)) {
+      this.horarios = [];
+    }
   }
-
 
   back() {
     this.navController.navigateBack("/agendamentos-medico");
