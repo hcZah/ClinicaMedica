@@ -54,7 +54,7 @@ export class LoginPage implements ViewWillEnter {
       if (role == "pac") {
         this.navController.navigateForward("/inicio");
       } else if (role == "med") {
-        //
+        this.navController.navigateForward("/agendamentos-medico");
       } else if (role == "adm") {
         this.navController.navigateForward("/menu-admin");
       } else {

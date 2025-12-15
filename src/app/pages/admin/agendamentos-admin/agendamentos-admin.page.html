@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <a class="" (click)="back()"><ion-icon name="arrow-back" color="light" size="large"></ion-icon></a>
+    </ion-buttons>
+    <ion-title>Clinica Médica</ion-title>
+    <ion-title size="small" class="subtitle">Agendamentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar [debounce]="500" show-clear-button="always" class="mt-16" (ionInput)="pesquisar($event)" placeholder="Pesquisar"></ion-searchbar>
+
+  <ion-radio-group class="grupo-radio" [value]="1" (ionChange)="mudarPesquisa($event)">
+    <ion-radio [value]="1">Médico</ion-radio>
+    <ion-radio class="radio-meio" [value]="2">Paciente</ion-radio>
+    <ion-radio [value]="3">Data ou hora</ion-radio>
+  </ion-radio-group>
+
+  <ion-list>
+    <ion-item *ngFor="let agendamento of agendamentosExpostos; let i = index">
+      <ion-label>
+        <p style='display:inline'> Médico: </p>
+        <h2 style='display:inline'> {{this.getNomeUsuario(agendamento.cdMedico)}}</h2>
+        <br>
+        <p style='display:inline'> Especialidade: </p>
+        <h2 style='display:inline'> {{this.getEspecialidade(agendamento.cdEspecialidade)}}</h2>
+        <br>
+        <p style='display:inline'> Paciente: </p>
+        <h2 style='display:inline'> {{this.getNomeUsuario(agendamento.cdPaciente)}}</h2>
+        <br>
+        <p style='display:inline'> Data: </p>
+        <h2 style='display:inline'> {{this.formatarData(agendamento.dia, agendamento.mes, agendamento.ano)}}</h2>
+        <br>
+        <p style='display:inline'> Horário: </p>
+        <h2 style='display:inline'> {{this.formatarHora(agendamento.hora)}}</h2>
+        <br>
+      </ion-label>
+      <ion-icon name="trash-outline" (click)="abrirAlerta(i)"></ion-icon>
+      <ion-alert [isOpen]="alertaAberto[i]" header="Cancelar agendamento permanentemente?"
+        message="Agendamento de {{this.getEspecialidade(agendamento.cdEspecialidade).toLowerCase()}} com Dr(a). {{this.getNomeUsuario(agendamento.cdMedico)}} às {{this.formatarHora(agendamento.hora)}} no dia {{this.formatarData(agendamento.dia, agendamento.mes, agendamento.ano)}} para {{this.getNomeUsuario(agendamento.cdPaciente)}}" [buttons]="alertButtons"
+        (didDismiss)="cancelarAgendamento($event, agendamento.cdAgendamento, i)" backdropDismiss="false"></ion-alert>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/paciente" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

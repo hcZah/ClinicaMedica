@@ -33,4 +33,8 @@ export class AgendamentosMedicoPage implements ViewWillEnter {
       }
     }
   }
+
+  paraLogin() {
+    this.navController.navigateBack("/login")
+  }
 }

@@ -27,6 +27,7 @@ export class AgendamentoDiaPage implements ViewWillEnter {
   mesHoje: number;
   mesHojeTexto: string;
   anoHoje: number;
+  diaDaSemanaHoje: string;
 
   medico: Medico;
   horarios: string[];
@@ -42,6 +43,7 @@ export class AgendamentoDiaPage implements ViewWillEnter {
     this.mesHoje = 0;
     this.mesHojeTexto = ""
     this.anoHoje = 0;
+    this.diaDaSemanaHoje = "";
 
     this.medico = new Medico(new Usuario());
     this.horarios = [];
@@ -76,6 +78,8 @@ export class AgendamentoDiaPage implements ViewWillEnter {
     if (this.diaHoje == undefined) {
       this.back();
     }
+
+    this.diaDaSemanaHoje = this.calendarioService.numeroParaDiaDaSemana(this.calendarioService.diaDaSemana(this.diaHoje, this.mesHoje, this.anoHoje));
 
     let cdMedico = parseInt(this.activatedRoute.snapshot.params['cdMedico'])
     this.medico = this.medicoService.getMedico(cdMedico);

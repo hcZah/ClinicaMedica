@@ -10,7 +10,31 @@ export class AgendamentoService {
   constructor() { }
 
   getAgendamentos(): Agendamento[] {
-    return JSON.parse(localStorage.getItem('agendamentos') || '[]');
+    let agendamentos = JSON.parse(localStorage.getItem('agendamentos') || '[]');
+
+    if (!Array.isArray(agendamentos)) {
+      return [];
+    }
+
+    for (let i = 0; i < agendamentos.length - 1; i++) {
+      let swapped = false;
+      for (let j = 0; j < agendamentos.length - i - 1; j++) {
+        let antes = new Date(agendamentos[j].ano, agendamentos[j].mes, agendamentos[j].dia, Math.floor(agendamentos[j].hora / 100), agendamentos[j].hora % 100).getTime();
+        let depois = new Date(agendamentos[j + 1].ano, agendamentos[j + 1].mes, agendamentos[j + 1].dia, Math.floor(agendamentos[j + 1].hora / 100), agendamentos[j + 1].hora % 100).getTime();
+        if (antes > depois) {
+          // Swap arr[j] and arr[j+1]
+          let temp = agendamentos[j];
+          agendamentos[j] = agendamentos[j + 1];
+          agendamentos[j + 1] = temp;
+          swapped = true;
+        }
+      }
+
+      if (swapped == false)
+        break;
+    }
+
+    return agendamentos;
   }
 
   getAgendamento(cdAgendamento: number): Agendamento {
@@ -51,8 +75,6 @@ export class AgendamentoService {
         }
       }
 
-      // IF no two elements were 
-      // swapped by inner loop, then break
       if (swapped == false)
         break;
     }
@@ -68,6 +90,24 @@ export class AgendamentoService {
     }
 
     agendamentos = agendamentos.filter((a: Agendamento) => a.cdMedico == cdMedico) || [];
+
+    for (let i = 0; i < agendamentos.length - 1; i++) {
+      let swapped = false;
+      for (let j = 0; j < agendamentos.length - i - 1; j++) {
+        let antes = new Date(agendamentos[j].ano, agendamentos[j].mes, agendamentos[j].dia, Math.floor(agendamentos[j].hora / 100), agendamentos[j].hora % 100).getTime();
+        let depois = new Date(agendamentos[j + 1].ano, agendamentos[j + 1].mes, agendamentos[j + 1].dia, Math.floor(agendamentos[j + 1].hora / 100), agendamentos[j + 1].hora % 100).getTime();
+        if (antes > depois) {
+          // Swap arr[j] and arr[j+1]
+          let temp = agendamentos[j];
+          agendamentos[j] = agendamentos[j + 1];
+          agendamentos[j + 1] = temp;
+          swapped = true;
+        }
+      }
+
+      if (swapped == false)
+        break;
+    }
 
     return agendamentos;
   }
@@ -116,6 +156,31 @@ export class AgendamentoService {
     // confere se falta menos de 7 dias para a consulta
     if (((Math.abs(hoje.getTime() - data_agendamento.getTime())) / (1000 * 60 * 60 * 24)) < 7) {
       return 0;
+    }
+
+    let agendamentos = this.getAgendamentos();
+    if (!Array.isArray(agendamentos)) {
+      return -1;
+    }
+
+    let index = agendamentos.findIndex((a: Agendamento) => a.cdAgendamento == cdAgendamento);
+    if (index == -1) {
+      return -1;
+    } else {
+      agendamentos.splice(index, 1);
+      localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+      return 1;
+    }
+  }
+
+  cancelarAgendamentoAdm(cdAgendamento: number): number {
+    if (cdAgendamento == 0) {
+      return -1;
+    }
+
+    let agendamento = this.getAgendamento(cdAgendamento);
+    if (cdAgendamento == 0) {
+      return -1;
     }
 
     let agendamentos = this.getAgendamentos();
