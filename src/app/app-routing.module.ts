@@ -74,9 +74,18 @@ const routes: Routes = [
   {
     path: 'especialidades',
     loadChildren: () => import('./pages/admin/especialidades/especialidades.module').then( m => m.EspecialidadesPageModule)
-  },  {
+  },
+  {
     path: 'agendamentos-admin',
     loadChildren: () => import('./pages/admin/agendamentos-admin/agendamentos-admin.module').then( m => m.AgendamentosAdminPageModule)
+  },
+  {
+    path: 'definir-horarios',
+    loadChildren: () => import('./pages/medico/definir-horarios/definir-horarios.module').then( m => m.DefinirHorariosPageModule)
+  },
+  {
+    path: 'definir-horarios/:cdMedico',
+    loadChildren: () => import('./pages/medico/definir-horarios/definir-horarios.module').then( m => m.DefinirHorariosPageModule)
   },
 
 
